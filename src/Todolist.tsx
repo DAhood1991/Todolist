@@ -1,25 +1,45 @@
 import React from "react";
+import {FilteredValueType} from "./App";
 
-export const Todolist = () => {
-  return(
-      <div className="App">
-          <div>
-              <h3>What to learn</h3>
-              <div>
-                  <input/>
-                  <button>+</button>
-              </div>
-              <ul>
-                  <li><input type="checkbox" checked={true}/> <span>HTML&CSS</span></li>
-                  <li><input type="checkbox" checked={true}/> <span>JS</span></li>
-                  <li><input type="checkbox" checked={false}/> <span>React</span></li>
-              </ul>
-              <div>
-                  <button>All</button>
-                  <button>Active</button>
-                  <button>Completed</button>
-              </div>
-          </div>
-      </div>
-  )
+export type TaskType = {
+    id: number
+    title: string
+    isDone: boolean
+}
+
+type TodolistType = {
+    title: string
+    tasks: Array<TaskType>
+    RemoveTask:(id:number)=>void
+    ChangeFilter:(value:FilteredValueType)=>void
+
+
+
+}
+export const Todolist = (props: TodolistType) => {
+    return (
+        <div>
+            <h3>{props.title}</h3>
+            <div>
+                <input/>
+                <button>+</button>
+            </div>
+            <ul>
+                {props.tasks.map((t) => {
+                    return (<li key={t.id}>
+                            <input type="checkbox" checked={t.isDone}/>
+                            <span>{t.title}</span>
+                            <button onClick={()=>{props.RemoveTask(t.id)}}>x
+                            </button>
+                        </li>
+                    )
+                })}
+            </ul>
+            <div>
+                <button onClick={()=>{props.ChangeFilter('all')}}>All</button>
+                <button onClick={()=>{props.ChangeFilter('active')}}>Active</button>
+                <button onClick={()=>{props.ChangeFilter('completed')}}>Completed</button>
+            </div>
+        </div>
+    )
 }
