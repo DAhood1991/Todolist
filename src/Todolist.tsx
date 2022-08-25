@@ -1,8 +1,8 @@
-import React from "react";
+import React, {useState} from "react";
 import {FilteredValueType} from "./App";
 
 export type TaskType = {
-    id: number
+    id: string
     title: string
     isDone: boolean
 }
@@ -10,19 +10,21 @@ export type TaskType = {
 type TodolistType = {
     title: string
     tasks: Array<TaskType>
-    RemoveTask:(id:number)=>void
+    RemoveTask:(id:string)=>void
     ChangeFilter:(value:FilteredValueType)=>void
+    AddTask:(title:string)=>void
 
 
 
 }
 export const Todolist = (props: TodolistType) => {
+    let [title,setTitle]=useState('')
     return (
         <div>
             <h3>{props.title}</h3>
             <div>
-                <input/>
-                <button>+</button>
+                <input value={title} onChange={(event)=>{setTitle(event.currentTarget.value)}}/>
+                <button onClick={()=>{props.AddTask(title)}}>+</button>
             </div>
             <ul>
                 {props.tasks.map((t) => {
