@@ -23,7 +23,6 @@ function App() {
     }
     const ChangeFilter = (value:FilteredValueType) => {
         setFilter(value)
-
     }
 
     const RemoveTask = (id: string) => {
